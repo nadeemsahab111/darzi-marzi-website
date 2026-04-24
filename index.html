@@ -115,14 +115,28 @@
   </style>
 </head>
 <body class="font-body-md bg-black selection:bg-primary-container selection:text-black">
-<!-- Simple Header Section -->
-<section class="bg-[#F8F6F0] text-black py-20 px-6 text-center border-b border-gray-200">
-<h1 class="font-display-xl text-[48px] md:text-[64px] font-bold mb-4">
-        DARZI <span class="text-[#D4AF37]">MARZI</span>
-</h1>
-<p class="font-label-caps text-[10px] md:text-sm tracking-[0.3em] text-gray-500 uppercase">
-        GET A <span class="text-[#D4AF37]">DARZI</span> OF YOUR <span class="text-[#D4AF37]">MARZI</span> AT YOUR <span class="text-[#D4AF37]">DOORSTEP</span>
-</p>
+<!-- Video Hero Section -->
+<section class="relative w-full h-[60vh] md:h-[80vh] flex flex-col justify-center items-center text-center border-b border-[#2C2C2C] overflow-hidden">
+    <!-- Background Video -->
+    <div class="absolute inset-0 w-full h-full z-0 bg-black">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[#1A1A1A] z-10"></div>
+        <video autoplay loop muted playsinline class="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover opacity-80 mix-blend-luminosity">
+            <!-- Tailoring / Fabric Measurement Stock Videos -->
+            <source src="https://videos.pexels.com/video-files/853889/853889-hd_1920_1080_25fps.mp4" type="video/mp4">
+            <source src="https://cdn.pixabay.com/video/2020/05/26/40149-425175242_large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="relative z-20 px-6 max-w-4xl mx-auto">
+        <h1 class="font-display-xl text-[56px] md:text-[96px] font-bold mb-6 text-white drop-shadow-[0_0_25px_rgba(212,175,55,0.2)]">
+            DARZI <span class="text-[#D4AF37]">MARZI</span>
+        </h1>
+        <p class="font-label-caps text-[10px] md:text-sm tracking-[0.4em] text-gray-200 uppercase drop-shadow-[0_0_10px_rgba(0,0,0,1)] bg-black/30 py-2 px-4 rounded-full backdrop-blur-sm border border-[#D4AF37]/20">
+            GET A <span class="text-[#D4AF37] font-bold glow">DARZI</span> OF YOUR <span class="text-[#D4AF37] font-bold glow">MARZI</span> AT YOUR <span class="text-[#D4AF37] font-bold glow">DOORSTEP</span>
+        </p>
+    </div>
 </section>
 <!-- Working Model Banner -->
 <section class="bg-[#1A1A1A] py-8 px-6 text-center border-b border-[#2C2C2C] relative overflow-hidden group">
