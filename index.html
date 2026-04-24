@@ -357,7 +357,7 @@
     var player;
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('bg-video', {
-            videoId: 'qXbWq1_gWNg',
+            videoId: 'wDTHqsAk1a4', // B-roll of tailor cutting, stitching, ironing
             playerVars: {
                 'autoplay': 1,
                 'controls': 0,
@@ -366,8 +366,8 @@
                 'mute': 1,
                 'modestbranding': 1,
                 'playsinline': 1,
-                'start': 22, // Start of b-roll hands segment
-                'end': 32    // End of 10s segment
+                'start': 10, // Hands only segment
+                'end': 20
             },
             events: {
                 'onReady': function(event) {
@@ -376,18 +376,18 @@
                 },
                 'onStateChange': function(event) {
                     if (event.data === YT.PlayerState.ENDED) {
-                        player.seekTo(22);
+                        player.seekTo(10);
                         player.playVideo();
                     }
                 }
             }
         });
         
-        // Failsafe polling for end time since YT player can sometimes miss ENDED event with 'end' param
+        // Failsafe polling for end time
         setInterval(function() {
             if (player && player.getCurrentTime) {
-                if (player.getCurrentTime() >= 31.5) {
-                    player.seekTo(22);
+                if (player.getCurrentTime() >= 19.5) {
+                    player.seekTo(10);
                 }
             }
         }, 500);
