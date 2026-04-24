@@ -120,9 +120,7 @@
     <!-- Background Video -->
     <div class="absolute inset-0 w-full h-full z-0 bg-black overflow-hidden pointer-events-none">
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[#1A1A1A] z-10"></div>
-        <iframe class="absolute top-1/2 left-1/2 w-[300vw] h-[300vh] md:w-[150vw] md:h-[150vh] -translate-x-1/2 -translate-y-1/2 opacity-70 mix-blend-luminosity"
-                src="https://www.youtube.com/embed/qXbWq1_gWNg?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=qXbWq1_gWNg"
-                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div id="bg-video" class="absolute top-1/2 left-1/2 w-[300vw] h-[300vh] md:w-[150vw] md:h-[150vh] -translate-x-1/2 -translate-y-1/2 opacity-70 mix-blend-luminosity"></div>
     </div>
     
     <!-- Hero Content -->
@@ -354,6 +352,47 @@
 <span class="font-label-caps text-[8px]">PROFILE</span>
 </div>
 </nav>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('bg-video', {
+            videoId: 'qXbWq1_gWNg',
+            playerVars: {
+                'autoplay': 1,
+                'controls': 0,
+                'showinfo': 0,
+                'rel': 0,
+                'mute': 1,
+                'modestbranding': 1,
+                'playsinline': 1,
+                'start': 22, // Start of b-roll hands segment
+                'end': 32    // End of 10s segment
+            },
+            events: {
+                'onReady': function(event) {
+                    event.target.mute();
+                    event.target.playVideo();
+                },
+                'onStateChange': function(event) {
+                    if (event.data === YT.PlayerState.ENDED) {
+                        player.seekTo(22);
+                        player.playVideo();
+                    }
+                }
+            }
+        });
+        
+        // Failsafe polling for end time since YT player can sometimes miss ENDED event with 'end' param
+        setInterval(function() {
+            if (player && player.getCurrentTime) {
+                if (player.getCurrentTime() >= 31.5) {
+                    player.seekTo(22);
+                }
+            }
+        }, 500);
+    }
+</script>
 </body>
 <script>
     const form = document.getElementById('privilege-form');
