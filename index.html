@@ -252,11 +252,102 @@
 <!-- Tailor CTA Section -->
 <section class="w-full py-16 bg-[#121212] border-b border-[#2C2C2C] flex justify-center items-center relative overflow-hidden group">
     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-    <a href="#" class="relative z-10 group/btn inline-flex items-center justify-center gap-3 border border-[#D4AF37] text-[#D4AF37] px-12 py-4 font-label-caps text-[12px] tracking-[0.3em] font-bold hover:bg-[#D4AF37] hover:text-black transition-all duration-300 hover:shadow-[0_0_25px_rgba(212,175,55,0.5)] bg-black">
+    <a href="javascript:void(0)" id="tailor-btn" class="relative z-10 group/btn inline-flex items-center justify-center gap-3 border border-[#D4AF37] text-[#D4AF37] px-12 py-4 font-label-caps text-[12px] tracking-[0.3em] font-bold hover:bg-[#D4AF37] hover:text-black transition-all duration-300 hover:shadow-[0_0_25px_rgba(212,175,55,0.5)] bg-black">
         ARE YOU A TAILOR?
-        <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-1 transition-transform duration-300">arrow_forward</span>
+        <span id="tailor-btn-icon" class="material-symbols-outlined text-[16px] transition-transform duration-500">keyboard_arrow_down</span>
     </a>
 </section>
+<!-- Tailor Dropdown Section -->
+<div id="tailor-section" class="w-full grid-rows-[0fr] transition-all duration-700 ease-in-out overflow-hidden grid">
+    <div class="min-h-0">
+        <section class="flex flex-col md:flex-row w-full border-b border-[#2C2C2C]">
+            <!-- Tailor Problem Card -->
+            <div class="bg-[#1A1A1A] p-12 md:p-20 flex-1 relative overflow-hidden">
+                <span class="material-symbols-outlined text-[#2C2C2C] absolute top-12 right-12 text-[120px] opacity-50" data-icon="error">error</span>
+                <h3 class="font-headline-lg text-white mb-2 text-4xl">PROBLEM</h3>
+                <h3 class="font-headline-lg text-[#D4AF37] mb-12 text-4xl">(TAILOR)</h3>
+                <ul class="space-y-8 font-body-md text-gray-300 relative z-10">
+                    <li class="flex items-start gap-6 group hover:translate-x-2 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-[#D4AF37]/50 group-hover:text-[#D4AF37] group-hover:drop-shadow-[0_0_10px_rgba(212,175,55,0.8)] transition-all duration-300 text-3xl mt-1">checkroom</span>
+                        <p class="text-sm group-hover:text-white transition-colors duration-300">Tailoring industry still relies on traditional, offline business models.</p>
+                    </li>
+                    <li class="flex items-start gap-6 group hover:translate-x-2 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-[#D4AF37]/50 group-hover:text-[#D4AF37] group-hover:drop-shadow-[0_0_10px_rgba(212,175,55,0.8)] transition-all duration-300 text-3xl mt-1">person</span>
+                        <p class="text-sm group-hover:text-white transition-colors duration-300">Limited geographical reach, lack of advertising, poor business management and no online sales.</p>
+                    </li>
+                </ul>
+            </div>
+            <!-- Tailor Solution Card -->
+            <div class="bg-white p-12 md:p-20 flex-1 relative overflow-hidden">
+                <span class="material-symbols-outlined text-[#F8F6F0] absolute top-12 right-12 text-[120px]" data-icon="check_circle">check_circle</span>
+                <h3 class="font-headline-lg text-black mb-2 text-4xl">SOLUTION</h3>
+                <h3 class="font-headline-lg text-[#D4AF37] mb-12 text-4xl">(TAILOR)</h3>
+                <ul class="space-y-8 font-body-md text-gray-600 relative z-10">
+                    <li class="flex items-start gap-6 group hover:translate-x-2 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-[#D4AF37]/50 group-hover:text-[#D4AF37] group-hover:drop-shadow-[0_0_10px_rgba(212,175,55,0.8)] transition-all duration-300 text-3xl mt-1">styler</span>
+                        <p class="text-sm group-hover:text-black transition-colors duration-300">An application for offline tailors to and unsewn clothing shops.</p>
+                    </li>
+                    <li class="flex items-start gap-6 group hover:translate-x-2 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-[#D4AF37]/50 group-hover:text-[#D4AF37] group-hover:drop-shadow-[0_0_10px_rgba(212,175,55,0.8)] transition-all duration-300 text-3xl mt-1">work</span>
+                        <p class="text-sm group-hover:text-black transition-colors duration-300">Online appearance(cloud tailoring), Good, business management, Increase in geographical reach, and advertising.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Tailor Form Section -->
+        <section class="py-16 px-6 bg-[#1A1A1A] relative overflow-hidden border-b border-[#2C2C2C]">
+            <div class="max-w-4xl mx-auto relative z-10">
+                <form id="tailor-form" class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="relative group">
+                            <label class="font-label-caps text-[11px] text-[#D4AF37] font-bold mb-3 block tracking-widest uppercase relative inline-block">BUSINESS NAME<span class="absolute -bottom-1 left-0 w-1/2 h-[1px] bg-gradient-to-r from-[#D4AF37] to-transparent group-hover:w-full transition-all duration-300"></span></label>
+                            <input required class="w-full bg-[#262626] border border-[#333] p-4 text-sm text-white focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_15px_rgba(212,175,55,0.2)] transition-all duration-300" placeholder="Ex. Royal Tailors" type="text"/>
+                        </div>
+                        <div class="relative group">
+                            <label class="font-label-caps text-[11px] text-[#D4AF37] font-bold mb-3 block tracking-widest uppercase relative inline-block">BUSINESS CONTACT NO<span class="absolute -bottom-1 left-0 w-1/2 h-[1px] bg-gradient-to-r from-[#D4AF37] to-transparent group-hover:w-full transition-all duration-300"></span></label>
+                            <input required class="w-full bg-[#262626] border border-[#333] p-4 text-sm text-white focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_15px_rgba(212,175,55,0.2)] transition-all duration-300" placeholder="Ex. 9876543210" type="tel"/>
+                        </div>
+                        <div class="relative group">
+                            <label class="font-label-caps text-[11px] text-[#D4AF37] font-bold mb-3 block tracking-widest uppercase relative inline-block">BUSINESS EMAIL ID<span class="absolute -bottom-1 left-0 w-1/2 h-[1px] bg-gradient-to-r from-[#D4AF37] to-transparent group-hover:w-full transition-all duration-300"></span></label>
+                            <input required class="w-full bg-[#262626] border border-[#333] p-4 text-sm text-white focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_15px_rgba(212,175,55,0.2)] transition-all duration-300" placeholder="Ex. contact@example.com" type="email"/>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                        <div class="relative group">
+                            <label class="font-label-caps text-[11px] text-[#D4AF37] font-bold mb-3 block tracking-widest uppercase relative inline-block">WHAT SERVICE YOU PROVIDE<span class="absolute -bottom-1 left-0 w-1/2 h-[1px] bg-gradient-to-r from-[#D4AF37] to-transparent group-hover:w-full transition-all duration-300"></span></label>
+                            <select required class="w-full bg-[#262626] border border-[#333] p-4 text-sm text-white focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_15px_rgba(212,175,55,0.2)] transition-all duration-300 appearance-none">
+                                <option disabled selected value="">Select Service</option>
+                                <option value="stitching_fabrics">Stitching & Fabrics</option>
+                                <option value="only_fabrics">Only Fabrics</option>
+                                <option value="only_stitching">Only Stitching</option>
+                            </select>
+                        </div>
+                        <div class="relative group">
+                            <label class="font-label-caps text-[11px] text-[#D4AF37] font-bold mb-3 block tracking-widest uppercase relative inline-block">ARE YOU PROVIDING SERVICES AT DOORSTEP<span class="absolute -bottom-1 left-0 w-1/2 h-[1px] bg-gradient-to-r from-[#D4AF37] to-transparent group-hover:w-full transition-all duration-300"></span></label>
+                            <select required class="w-full bg-[#262626] border border-[#333] p-4 text-sm text-white focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_15px_rgba(212,175,55,0.2)] transition-all duration-300 appearance-none">
+                                <option disabled selected value="">Select Option</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-8 mt-8">
+                        <div class="relative group">
+                            <label class="font-label-caps text-[11px] text-[#D4AF37] font-bold mb-3 block tracking-widest uppercase relative inline-block">HOW YOU WANT US TO GROW OUR BUSINESS<span class="absolute -bottom-1 left-0 w-1/2 h-[1px] bg-gradient-to-r from-[#D4AF37] to-transparent group-hover:w-full transition-all duration-300"></span></label>
+                            <input required class="w-full bg-[#262626] border border-[#333] p-4 text-sm text-white focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_15px_rgba(212,175,55,0.2)] transition-all duration-300" placeholder="Ex. Need more customers, online presence, etc." type="text"/>
+                        </div>
+                    </div>
+                    <div class="mt-12 text-center">
+                        <button id="tailor-submit-btn" type="button" disabled class="bg-[#D4AF37] text-black px-12 py-4 font-label-caps text-[12px] tracking-[0.2em] font-bold opacity-50 cursor-not-allowed w-full md:w-auto transition-all duration-300">
+                            REGISTER BUSINESS
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
 <!-- Privileges Form -->
 <section class="py-24 px-6 bg-[#1A1A1A] relative overflow-hidden">
 <div class="absolute inset-0 bg-gradient-to-br from-[#1A1A1A] to-black z-0"></div>
@@ -308,7 +399,7 @@
         CONTACT US
     </button>
     <div class="flex justify-center gap-10 items-center">
-        <a href="#" class="flex items-center justify-center w-12 h-12 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] bg-black/20 hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37] hover:-translate-y-2 hover:rotate-[360deg] hover:shadow-[0_0_25px_rgba(212,175,55,0.6)] transition-all duration-700 group" aria-label="Instagram">
+        <a href="https://www.instagram.com/darzimarziindia?igsh=MW41eDFvbXVjaGNmeA==" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center w-12 h-12 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] bg-black/20 hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37] hover:-translate-y-2 hover:rotate-[360deg] hover:shadow-[0_0_25px_rgba(212,175,55,0.6)] transition-all duration-700 group" aria-label="Instagram">
             <svg class="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
             </svg>
@@ -395,35 +486,90 @@
 </script>
 </body>
 <script>
-    const form = document.getElementById('privilege-form');
-    const saveBtn = document.getElementById('save-btn');
-    const inputs = form.querySelectorAll('input, select');
+    // Privilege Form Logic
+    const privForm = document.getElementById('privilege-form');
+    const privSaveBtn = document.getElementById('save-btn');
+    const privInputs = privForm.querySelectorAll('input, select');
 
-    function checkForm() {
+    function checkPrivForm() {
         let allFilled = true;
-        inputs.forEach(input => {
+        privInputs.forEach(input => {
             if (!input.value.trim()) {
                 allFilled = false;
             }
         });
 
         if (allFilled) {
-            saveBtn.disabled = false;
-            saveBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            saveBtn.classList.add('hover:bg-white', 'hover:scale-105', 'hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]', 'cursor-pointer');
+            privSaveBtn.disabled = false;
+            privSaveBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            privSaveBtn.classList.add('hover:bg-white', 'hover:scale-105', 'hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]', 'cursor-pointer');
         } else {
-            saveBtn.disabled = true;
-            saveBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            saveBtn.classList.remove('hover:bg-white', 'hover:scale-105', 'hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]', 'cursor-pointer');
+            privSaveBtn.disabled = true;
+            privSaveBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            privSaveBtn.classList.remove('hover:bg-white', 'hover:scale-105', 'hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]', 'cursor-pointer');
         }
     }
 
-    inputs.forEach(input => {
-        input.addEventListener('input', checkForm);
-        input.addEventListener('change', checkForm);
+    privInputs.forEach(input => {
+        input.addEventListener('input', checkPrivForm);
+        input.addEventListener('change', checkPrivForm);
     });
     
     // Initial check
-    checkForm();
+    checkPrivForm();
+
+    // Tailor Form Logic
+    const tailorForm = document.getElementById('tailor-form');
+    const tailorSubmitBtn = document.getElementById('tailor-submit-btn');
+    if (tailorForm && tailorSubmitBtn) {
+        const tailorInputs = tailorForm.querySelectorAll('input, select');
+        function checkTailorForm() {
+            let allFilled = true;
+            tailorInputs.forEach(input => {
+                if (!input.value.trim()) {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled) {
+                tailorSubmitBtn.disabled = false;
+                tailorSubmitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                tailorSubmitBtn.classList.add('hover:bg-white', 'hover:scale-105', 'hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]', 'cursor-pointer');
+            } else {
+                tailorSubmitBtn.disabled = true;
+                tailorSubmitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                tailorSubmitBtn.classList.remove('hover:bg-white', 'hover:scale-105', 'hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]', 'cursor-pointer');
+            }
+        }
+
+        tailorInputs.forEach(input => {
+            input.addEventListener('input', checkTailorForm);
+            input.addEventListener('change', checkTailorForm);
+        });
+        checkTailorForm();
+    }
+
+    // Tailor Dropdown Logic
+    const tailorBtn = document.getElementById('tailor-btn');
+    const tailorSection = document.getElementById('tailor-section');
+    const tailorBtnIcon = document.getElementById('tailor-btn-icon');
+
+    if (tailorBtn && tailorSection) {
+        tailorBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (tailorSection.classList.contains('grid-rows-[0fr]')) {
+                tailorSection.classList.remove('grid-rows-[0fr]');
+                tailorSection.classList.add('grid-rows-[1fr]');
+                tailorBtnIcon.style.transform = 'rotate(180deg)';
+                setTimeout(() => {
+                    tailorSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            } else {
+                tailorSection.classList.remove('grid-rows-[1fr]');
+                tailorSection.classList.add('grid-rows-[0fr]');
+                tailorBtnIcon.style.transform = 'rotate(0deg)';
+            }
+        });
+    }
 </script>
 </html>
