@@ -817,10 +817,7 @@
         const customers = JSON.parse(localStorage.getItem('dm_customer_leads') || '[]');
         const tailors   = JSON.parse(localStorage.getItem('dm_tailor_leads') || '[]');
 
-        if (customers.length === 0 && tailors.length === 0) {
-            alert('NO RECORDS FOUND\nThere are currently no submissions to export.');
-            return;
-        }
+
 
         // CSV Construction
         let csvRows = [];
