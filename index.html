@@ -803,7 +803,9 @@
         adminBtn.addEventListener('click', () => {
             const code = prompt('ADMIN ACCESS REQUIRED\nEnter secure code to download records:');
             if (code === '171222191126') {
-                downloadRecords();
+                if (confirm('ACCESS GRANTED\n\nDo you want to download the master records as a CSV file?')) {
+                    downloadRecords();
+                }
             } else if (code !== null) {
                 alert('ACCESS DENIED\nInvalid administrative code.');
                 gaEvent('admin_access_denied', { timestamp: new Date().toISOString() });
