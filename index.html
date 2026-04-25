@@ -2,6 +2,14 @@
 
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
+<!-- Google tag (gtag.js) - Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FLVG3EBKW7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FLVG3EBKW7');
+</script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>DARZI MARZI | Digital Haute Couture</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -112,9 +120,95 @@
     body {
       min-height: max(884px, 100dvh);
     }
+
+    /* ── Toast Notification ───────────────────────────────────────────── */
+    #dm-toast {
+      position: fixed;
+      top: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-120px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #0d0d0d;
+      border: 1px solid #D4AF37;
+      box-shadow: 0 0 35px rgba(212,175,55,0.35), 0 8px 32px rgba(0,0,0,0.6);
+      padding: 18px 28px;
+      min-width: 320px;
+      max-width: 90vw;
+      border-radius: 2px;
+      transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #dm-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #dm-toast .toast-icon {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      background: #D4AF37;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 18px;
+    }
+    #dm-toast .toast-body {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    #dm-toast .toast-title {
+      font-family: 'Noto Serif', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #D4AF37;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    #dm-toast .toast-sub {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      color: #c8c6c5;
+      letter-spacing: 0.05em;
+    }
+    #dm-toast .toast-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #D4AF37, #f2ca50);
+      width: 100%;
+      transform-origin: left;
+      animation: none;
+    }
+    #dm-toast.show .toast-bar {
+      animation: toast-shrink 3s linear forwards;
+    }
+    @keyframes toast-shrink {
+      from { transform: scaleX(1); }
+      to   { transform: scaleX(0); }
+    }
   </style>
 </head>
 <body class="font-body-md bg-black selection:bg-primary-container selection:text-black">
+<!-- ── Toast Notification ─────────────────────────────────────────────── -->
+<div id="dm-toast" role="alert" aria-live="polite">
+  <div class="toast-icon">
+    <span class="material-symbols-outlined" style="font-size:18px;font-variation-settings:'FILL' 1,'wght' 700;">check</span>
+  </div>
+  <div class="toast-body">
+    <span class="toast-title" id="toast-title">Thank You!</span>
+    <span class="toast-sub"  id="toast-sub">Your details have been saved.</span>
+  </div>
+  <div class="toast-bar"></div>
+</div>
 <!-- Video Hero Section -->
 <section class="relative w-full h-[60vh] md:h-[80vh] flex flex-col justify-center items-center text-center border-b border-[#2C2C2C] overflow-hidden">
     <!-- Background Video -->
@@ -472,89 +566,200 @@
 </script>
 </body>
 <script>
-    // Privilege Form Logic
-    const privForm = document.getElementById('privilege-form');
+    // ────────────────────────────────────────────────────────────────────────────
+    //  GA4 Event Helper
+    // ────────────────────────────────────────────────────────────────────────────
+    function gaEvent(eventName, params) {
+        if (typeof gtag === 'function') gtag('event', eventName, params || {});
+    }
+
+    // ────────────────────────────────────────────────────────────────────────────
+    //  Toast Notification — shows for 3 seconds then slides away
+    // ────────────────────────────────────────────────────────────────────────────
+    let toastTimer = null;
+    function showToast(title, subtitle) {
+        const toast    = document.getElementById('dm-toast');
+        const titleEl  = document.getElementById('toast-title');
+        const subEl    = document.getElementById('toast-sub');
+        const bar      = toast.querySelector('.toast-bar');
+
+        titleEl.textContent = title;
+        subEl.textContent   = subtitle;
+
+        // Reset bar animation
+        bar.style.animation = 'none';
+        void bar.offsetWidth; // reflow
+        bar.style.animation = '';
+
+        if (toastTimer) clearTimeout(toastTimer);
+        toast.classList.add('show');
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // ────────────────────────────────────────────────────────────────────────────
+    //  LocalStorage Save Helper
+    // ────────────────────────────────────────────────────────────────────────────
+    function saveRecord(storageKey, data) {
+        const existing = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        existing.push({ ...data, timestamp: new Date().toISOString() });
+        localStorage.setItem(storageKey, JSON.stringify(existing));
+    }
+
+    // ────────────────────────────────────────────────────────────────────────────
+    //  CUSTOMER PRIVILEGES FORM
+    // ────────────────────────────────────────────────────────────────────────────
+    const privForm    = document.getElementById('privilege-form');
     const privSaveBtn = document.getElementById('save-btn');
-    const privInputs = privForm.querySelectorAll('input, select');
+    const privInputs  = privForm.querySelectorAll('input, select');
 
     function checkPrivForm() {
-        let allFilled = true;
-        privInputs.forEach(input => {
-            if (!input.value.trim()) {
-                allFilled = false;
-            }
-        });
-
+        const allFilled = [...privInputs].every(i => i.value.trim());
+        privSaveBtn.disabled = !allFilled;
         if (allFilled) {
-            privSaveBtn.disabled = false;
             privSaveBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             privSaveBtn.classList.add('hover:bg-white', 'hover:scale-105', 'hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]', 'cursor-pointer');
         } else {
-            privSaveBtn.disabled = true;
             privSaveBtn.classList.add('opacity-50', 'cursor-not-allowed');
             privSaveBtn.classList.remove('hover:bg-white', 'hover:scale-105', 'hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]', 'cursor-pointer');
         }
     }
 
     privInputs.forEach(input => {
-        input.addEventListener('input', checkPrivForm);
+        input.addEventListener('input',  checkPrivForm);
         input.addEventListener('change', checkPrivForm);
+        input.addEventListener('focus', () =>
+            gaEvent('form_interaction', { form_name: 'customer_privileges', field_name: input.placeholder || input.type })
+        );
     });
-    
-    // Initial check
+
+    privSaveBtn.addEventListener('click', () => {
+        if (privSaveBtn.disabled) return;
+
+        // Collect values
+        const inputs    = [...privInputs];
+        const fullName  = inputs.find(i => i.type === 'text')?.value.trim()  || '';
+        const phone     = inputs.find(i => i.type === 'tel')?.value.trim()   || '';
+        const email     = inputs.find(i => i.type === 'email')?.value.trim() || '';
+        const frequency = inputs.find(i => i.tagName === 'SELECT' && i.id !== 'tailor-service')?.value || '';
+        const barrier   = inputs.find(i => i.type === 'text' && i !== inputs.find(j => j.type === 'text'))?.value.trim() || '';
+
+        // Grab all text/tel/email/select values generically for reliability
+        const allVals = {};
+        privInputs.forEach((inp, idx) => { allVals['field_' + idx] = inp.value.trim(); });
+
+        // 1. Save to localStorage
+        saveRecord('dm_customer_leads', {
+            full_name: fullName, phone, email,
+            stitch_frequency: frequency,
+            barrier_to_tailoring: allVals['field_4'] || ''
+        });
+
+        // 2. Fire GA4 event with actual data
+        gaEvent('customer_form_submit', {
+            form_name:         'customer_privileges',
+            customer_name:     fullName,
+            customer_phone:    phone,
+            customer_email:    email,
+            stitch_frequency:  frequency
+        });
+
+        // 3. Show thank-you toast
+        showToast('THANK YOU!',
+                  'We will notify you for the discounts!');
+
+        // 4. Reset form
+        privForm.reset();
+        checkPrivForm();
+    });
+
     checkPrivForm();
 
-    // Tailor Form Logic
-    const tailorForm = document.getElementById('tailor-form');
+    // ────────────────────────────────────────────────────────────────────────────
+    //  TAILOR REGISTRATION FORM
+    // ────────────────────────────────────────────────────────────────────────────
+    const tailorForm      = document.getElementById('tailor-form');
     const tailorSubmitBtn = document.getElementById('tailor-submit-btn');
+
     if (tailorForm && tailorSubmitBtn) {
         const tailorInputs = tailorForm.querySelectorAll('input, select');
-        function checkTailorForm() {
-            let allFilled = true;
-            tailorInputs.forEach(input => {
-                if (!input.value.trim()) {
-                    allFilled = false;
-                }
-            });
 
+        function checkTailorForm() {
+            const allFilled = [...tailorInputs].every(i => i.value.trim());
+            tailorSubmitBtn.disabled = !allFilled;
             if (allFilled) {
-                tailorSubmitBtn.disabled = false;
                 tailorSubmitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                 tailorSubmitBtn.classList.add('hover:bg-white', 'hover:scale-105', 'hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]', 'cursor-pointer');
             } else {
-                tailorSubmitBtn.disabled = true;
                 tailorSubmitBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 tailorSubmitBtn.classList.remove('hover:bg-white', 'hover:scale-105', 'hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]', 'cursor-pointer');
             }
         }
 
         tailorInputs.forEach(input => {
-            input.addEventListener('input', checkTailorForm);
+            input.addEventListener('input',  checkTailorForm);
             input.addEventListener('change', checkTailorForm);
+            input.addEventListener('focus', () =>
+                gaEvent('form_interaction', { form_name: 'tailor_registration', field_name: input.placeholder || input.type })
+            );
         });
+
+        tailorSubmitBtn.addEventListener('click', () => {
+            if (tailorSubmitBtn.disabled) return;
+
+            // Collect values
+            const tInputs   = [...tailorInputs];
+            const bizName   = tailorForm.querySelector('input[type="text"]')?.value.trim()  || '';
+            const bizPhone  = tailorForm.querySelector('input[type="tel"]')?.value.trim()   || '';
+            const bizEmail  = tailorForm.querySelector('input[type="email"]')?.value.trim() || '';
+            const selects   = tailorForm.querySelectorAll('select');
+            const service   = selects[0]?.value || '';
+            const doorstep  = selects[1]?.value || '';
+            const growthGoal = tailorForm.querySelectorAll('input[type="text"]')[1]?.value.trim() || '';
+
+            // 1. Save to localStorage
+            saveRecord('dm_tailor_leads', {
+                business_name: bizName, phone: bizPhone, email: bizEmail,
+                service_type: service, doorstep_service: doorstep, growth_goal: growthGoal
+            });
+
+            // 2. Fire GA4 event with actual data
+            gaEvent('tailor_form_submit', {
+                form_name:       'tailor_registration',
+                business_name:   bizName,
+                tailor_phone:    bizPhone,
+                tailor_email:    bizEmail,
+                service_type:    service,
+                doorstep:        doorstep
+            });
+
+            // 3. Show thank-you toast
+            showToast('THANK YOU!',
+                      'We will contact you soon!');
+
+            // 4. Reset form
+            tailorForm.reset();
+            checkTailorForm();
+        });
+
         checkTailorForm();
     }
 
-    // Tailor Dropdown Logic
-    const tailorBtn = document.getElementById('tailor-btn');
+    // ────────────────────────────────────────────────────────────────────────────
+    //  TAILOR CTA DROPDOWN
+    // ────────────────────────────────────────────────────────────────────────────
+    const tailorBtn     = document.getElementById('tailor-btn');
     const tailorSection = document.getElementById('tailor-section');
     const tailorBtnIcon = document.getElementById('tailor-btn-icon');
 
     if (tailorBtn && tailorSection) {
         tailorBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            if (tailorSection.classList.contains('grid-rows-[0fr]')) {
-                tailorSection.classList.remove('grid-rows-[0fr]');
-                tailorSection.classList.add('grid-rows-[1fr]');
-                tailorBtnIcon.style.transform = 'rotate(180deg)';
-                setTimeout(() => {
-                    tailorSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 300);
-            } else {
-                tailorSection.classList.remove('grid-rows-[1fr]');
-                tailorSection.classList.add('grid-rows-[0fr]');
-                tailorBtnIcon.style.transform = 'rotate(0deg)';
-            }
+            const isCollapsed = tailorSection.classList.contains('grid-rows-[0fr]');
+            tailorSection.classList.toggle('grid-rows-[0fr]', !isCollapsed);
+            tailorSection.classList.toggle('grid-rows-[1fr]',  isCollapsed);
+            tailorBtnIcon.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
+            gaEvent('tailor_cta_click', { action: isCollapsed ? 'expand' : 'collapse' });
+            if (isCollapsed) setTimeout(() => tailorSection.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
         });
     }
 </script>
