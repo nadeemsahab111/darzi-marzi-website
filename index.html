@@ -195,9 +195,41 @@
       from { transform: scaleX(1); }
       to   { transform: scaleX(0); }
     }
+
+    /* ── Admin Trigger Button ────────────────────────────────────────── */
+    #admin-trigger {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 60;
+      color: rgba(212, 175, 55, 0.4);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    #admin-trigger:hover {
+      color: #D4AF37;
+      background: rgba(212, 175, 55, 0.1);
+      box-shadow: 0 0 15px rgba(212,175,55,0.2);
+    }
+    #admin-trigger .material-symbols-outlined {
+      font-size: 24px;
+      font-variation-settings: 'wght' 300;
+    }
   </style>
 </head>
 <body class="font-body-md bg-black selection:bg-primary-container selection:text-black">
+<!-- ── Admin Trigger ────────────────────────────────────────────────── -->
+<button id="admin-trigger" title="Admin Access">
+    <span class="material-symbols-outlined">more_vert</span>
+</button>
 <!-- ── Toast Notification ─────────────────────────────────────────────── -->
 <div id="dm-toast" role="alert" aria-live="polite">
   <div class="toast-icon">
@@ -761,6 +793,82 @@
             gaEvent('tailor_cta_click', { action: isCollapsed ? 'expand' : 'collapse' });
             if (isCollapsed) setTimeout(() => tailorSection.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
         });
+    }
+
+    // ────────────────────────────────────────────────────────────────────────────
+    //  ADMIN ACCESS & CSV DOWNLOAD
+    // ────────────────────────────────────────────────────────────────────────────
+    const adminBtn = document.getElementById('admin-trigger');
+    if (adminBtn) {
+        adminBtn.addEventListener('click', () => {
+            const code = prompt('ADMIN ACCESS REQUIRED\nEnter secure code to download records:');
+            if (code === '17122219112026') {
+                downloadRecords();
+            } else if (code !== null) {
+                alert('ACCESS DENIED\nInvalid administrative code.');
+                gaEvent('admin_access_denied', { timestamp: new Date().toISOString() });
+            }
+        });
+    }
+
+    function downloadRecords() {
+        const customers = JSON.parse(localStorage.getItem('dm_customer_leads') || '[]');
+        const tailors   = JSON.parse(localStorage.getItem('dm_tailor_leads') || '[]');
+
+        if (customers.length === 0 && tailors.length === 0) {
+            alert('NO RECORDS FOUND\nThere are currently no submissions to export.');
+            return;
+        }
+
+        // CSV Construction
+        let csvRows = [];
+        
+        // Header
+        csvRows.push(['TYPE', 'NAME / BUSINESS', 'PHONE', 'EMAIL', 'STITCH FREQUENCY', 'SERVICE TYPE', 'DOORSTEP', 'GOAL / BARRIER', 'TIMESTAMP'].join(','));
+
+        // Customer Data
+        customers.forEach(c => {
+            csvRows.push([
+                'Customer',
+                `"${(c.full_name || '').replace(/"/g, '""')}"`,
+                `"${(c.phone || '').replace(/"/g, '""')}"`,
+                `"${(c.email || '').replace(/"/g, '""')}"`,
+                `"${(c.stitch_frequency || '').replace(/"/g, '""')}"`,
+                '-',
+                '-',
+                `"${(c.barrier_to_tailoring || '').replace(/"/g, '""')}"`,
+                `"${(c.timestamp || '').replace(/"/g, '""')}"`
+            ].join(','));
+        });
+
+        // Tailor Data
+        tailors.forEach(t => {
+            csvRows.push([
+                'Tailor',
+                `"${(t.business_name || '').replace(/"/g, '""')}"`,
+                `"${(t.phone || '').replace(/"/g, '""')}"`,
+                `"${(t.email || '').replace(/"/g, '""')}"`,
+                '-',
+                `"${(t.service_type || '').replace(/"/g, '""')}"`,
+                `"${(t.doorstep_service || '').replace(/"/g, '""')}"`,
+                `"${(t.growth_goal || '').replace(/"/g, '""')}"`,
+                `"${(t.timestamp || '').replace(/"/g, '""')}"`
+            ].join(','));
+        });
+
+        const csvString = csvRows.join('\n');
+        const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `Darzi_Marzi_Master_Records_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        gaEvent('admin_export_success', { count: customers.length + tailors.length });
     }
 </script>
 </html>
