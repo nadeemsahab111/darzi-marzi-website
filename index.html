@@ -262,157 +262,49 @@
     </div>
 
     <!-- The Dashboard View (shown after signup) -->
-    <div id="tailor-dashboard-view" class="w-full flex-1 bg-gray-50 relative hidden overflow-y-auto">
+    <div id="tailor-dashboard-view" class="w-full flex-1 bg-gray-50 relative hidden overflow-hidden">
       <div class="flex h-full">
         <!-- Sidebar -->
-        <div class="w-64 bg-[#121411] text-white hidden lg:flex flex-col p-6 shrink-0">
-          <nav class="space-y-6 flex-1">
-            <div class="flex items-center gap-3 text-[#CC007E] px-2">
+        <div class="w-64 bg-[#121411] text-white hidden lg:flex flex-col p-6 shrink-0 border-r border-white/5">
+          <nav class="space-y-4 flex-1">
+            <button data-view="overview" class="view-trigger w-full flex items-center gap-3 text-[#CC007E] px-4 py-3 rounded-lg bg-white/5 transition-all">
               <span class="material-symbols-outlined">dashboard</span>
-              <span class="font-bold tracking-widest text-sm uppercase">Overview</span>
-            </div>
-            <div class="flex items-center gap-3 text-gray-400 hover:text-white px-2 transition-colors cursor-pointer">
-              <span class="material-symbols-outlined">shopping_cart</span>
-              <span class="font-bold tracking-widest text-sm uppercase">Orders</span>
-            </div>
-            <div class="flex items-center gap-3 text-gray-400 hover:text-white px-2 transition-colors cursor-pointer">
-              <span class="material-symbols-outlined">groups</span>
-              <span class="font-bold tracking-widest text-sm uppercase">Customers</span>
-            </div>
-            <div class="flex items-center gap-3 text-gray-400 hover:text-white px-2 transition-colors cursor-pointer">
-              <span class="material-symbols-outlined">straighten</span>
-              <span class="font-bold tracking-widest text-sm uppercase">Measurements</span>
-            </div>
-            <div class="flex items-center gap-3 text-gray-400 hover:text-white px-2 transition-colors cursor-pointer">
-              <span class="material-symbols-outlined">analytics</span>
-              <span class="font-bold tracking-widest text-sm uppercase">Analytics</span>
-            </div>
-          </nav>
-          <div class="border-t border-white/10 pt-6 mt-6">
-            <div class="flex items-center gap-3 text-gray-400 hover:text-[#CC007E] px-2 transition-colors cursor-pointer">
+              <span class="font-bold tracking-widest text-[11px] uppercase">Overview</span>
+            </button>
+            <button data-view="invoices" class="view-trigger w-full flex items-center gap-3 text-gray-400 hover:text-white px-4 py-3 rounded-lg transition-all">
+              <span class="material-symbols-outlined">receipt_long</span>
+              <span class="font-bold tracking-widest text-[11px] uppercase">Invoice Panel</span>
+            </button>
+            <button data-view="calendar" class="view-trigger w-full flex items-center gap-3 text-gray-400 hover:text-white px-4 py-3 rounded-lg transition-all">
+              <span class="material-symbols-outlined">calendar_month</span>
+              <span class="font-bold tracking-widest text-[11px] uppercase">Calendar</span>
+            </button>
+            <button data-view="designs" class="view-trigger w-full flex items-center gap-3 text-gray-400 hover:text-white px-4 py-3 rounded-lg transition-all">
+              <span class="material-symbols-outlined">palette</span>
+              <span class="font-bold tracking-widest text-[11px] uppercase">Designs</span>
+            </button>
+            <button data-view="messages" class="view-trigger w-full flex items-center gap-3 text-gray-400 hover:text-white px-4 py-3 rounded-lg transition-all">
+              <span class="material-symbols-outlined">forum</span>
+              <span class="font-bold tracking-widest text-[11px] uppercase">Messages</span>
+            </button>
+            <button data-view="settings" class="view-trigger w-full flex items-center gap-3 text-gray-400 hover:text-white px-4 py-3 rounded-lg transition-all">
               <span class="material-symbols-outlined">settings</span>
-              <span class="font-bold tracking-widest text-sm uppercase">Settings</span>
+              <span class="font-bold tracking-widest text-[11px] uppercase">Settings</span>
+            </button>
+          </nav>
+          <div class="mt-auto pt-6 border-t border-white/10">
+            <div class="flex items-center gap-3 px-4 text-xs text-gray-500">
+                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                SYSTEM ONLINE
             </div>
           </div>
         </div>
 
         <!-- Main Content Area -->
-        <div class="flex-1 flex flex-col min-w-0">
-          <!-- Dashboard Header -->
-          <div class="bg-white border-b border-gray-200 px-8 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
-            <div>
-              <h3 class="font-headline-md text-2xl font-bold text-gray-900" id="dashboard-welcome-msg">Welcome Back!</h3>
-              <p class="text-sm text-gray-500 mt-1">Here is what's happening with your business today.</p>
-            </div>
-            <div class="flex gap-3 w-full sm:w-auto">
-              <button class="bg-[#CC007E] text-white px-6 py-2.5 rounded font-label-caps text-[11px] tracking-widest font-bold hover:shadow-[0_0_20px_rgba(226,55,68,0.3)] transition-all">NEW ORDER</button>
-            </div>
-          </div>
-
-          <!-- Stats Grid -->
-          <div class="p-8 space-y-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <!-- Card 1 -->
-              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
-                <div class="flex justify-between items-start mb-4">
-                  <div class="p-3 bg-[#CC007E]/5 rounded-lg text-[#CC007E]">
-                    <span class="material-symbols-outlined">currency_rupee</span>
-                  </div>
-                  <span class="text-xs font-bold text-green-500">+12.5%</span>
-                </div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Total Revenue</h4>
-                <p class="text-2xl font-bold text-gray-900">₹ 84,250</p>
-              </div>
-              <!-- Card 2 -->
-              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
-                <div class="flex justify-between items-start mb-4">
-                  <div class="p-3 bg-blue-50 rounded-lg text-blue-600">
-                    <span class="material-symbols-outlined">package_2</span>
-                  </div>
-                  <span class="text-xs font-bold text-blue-500">8 Pending</span>
-                </div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Active Orders</h4>
-                <p class="text-2xl font-bold text-gray-900">24</p>
-              </div>
-              <!-- Card 3 -->
-              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
-                <div class="flex justify-between items-start mb-4">
-                  <div class="p-3 bg-[#FFBD59]/10 rounded-lg text-[#FFBD59]">
-                    <span class="material-symbols-outlined">person_add</span>
-                  </div>
-                  <span class="text-xs font-bold text-orange-500">+4 Today</span>
-                </div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">New Leads</h4>
-                <p class="text-2xl font-bold text-gray-900">12</p>
-              </div>
-              <!-- Card 4 -->
-              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
-                <div class="flex justify-between items-start mb-4">
-                  <div class="p-3 bg-purple-50 rounded-lg text-purple-600">
-                    <span class="material-symbols-outlined">star</span>
-                  </div>
-                  <span class="text-xs font-bold text-purple-500">4.9 / 5</span>
-                </div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Customer Rating</h4>
-                <p class="text-2xl font-bold text-gray-900">156 Reviews</p>
-              </div>
-            </div>
-
-            <!-- Recent Orders -->
-            <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-              <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-                <h4 class="font-bold text-gray-900 uppercase tracking-widest text-xs">Recent Orders</h4>
-                <button class="text-[#CC007E] text-[10px] font-bold tracking-widest uppercase hover:underline">View All</button>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm">
-                  <thead class="bg-gray-50 text-gray-400 uppercase text-[10px] tracking-widest font-bold">
-                    <tr>
-                      <th class="px-6 py-4">Order ID</th>
-                      <th class="px-6 py-4">Customer</th>
-                      <th class="px-6 py-4">Status</th>
-                      <th class="px-6 py-4">Amount</th>
-                      <th class="px-6 py-4">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-gray-50">
-                    <tr class="hover:bg-gray-50 transition-colors">
-                      <td class="px-6 py-4 font-mono text-gray-500 text-xs">#DM-1024</td>
-                      <td class="px-6 py-4 font-bold text-gray-900">Ananya Verma</td>
-                      <td class="px-6 py-4">
-                        <span class="bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Measuring</span>
-                      </td>
-                      <td class="px-6 py-4 font-bold">₹ 4,500</td>
-                      <td class="px-6 py-4">
-                        <button class="text-gray-400 hover:text-[#CC007E]"><span class="material-symbols-outlined">visibility</span></button>
-                      </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50 transition-colors">
-                      <td class="px-6 py-4 font-mono text-gray-500 text-xs">#DM-1023</td>
-                      <td class="px-6 py-4 font-bold text-gray-900">Vikram Singh</td>
-                      <td class="px-6 py-4">
-                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Stitching</span>
-                      </td>
-                      <td class="px-6 py-4 font-bold">₹ 8,200</td>
-                      <td class="px-6 py-4">
-                        <button class="text-gray-400 hover:text-[#CC007E]"><span class="material-symbols-outlined">visibility</span></button>
-                      </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50 transition-colors">
-                      <td class="px-6 py-4 font-mono text-gray-500 text-xs">#DM-1022</td>
-                      <td class="px-6 py-4 font-bold text-gray-900">Priya Sharma</td>
-                      <td class="px-6 py-4">
-                        <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Delivered</span>
-                      </td>
-                      <td class="px-6 py-4 font-bold">₹ 3,800</td>
-                      <td class="px-6 py-4">
-                        <button class="text-gray-400 hover:text-[#CC007E]"><span class="material-symbols-outlined">visibility</span></button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        <div class="flex-1 flex flex-col min-w-0 overflow-y-auto" id="dashboard-content-area">
+          <!-- Views will be injected here by JS -->
+          <div id="view-loader" class="flex-1 flex items-center justify-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#CC007E]"></div>
           </div>
         </div>
       </div>
@@ -1047,26 +939,249 @@
     const tailorSignupView = document.getElementById('tailor-signup-view');
     const tailorDashboardView = document.getElementById('tailor-dashboard-view');
     const tailorQuickSignupForm = document.getElementById('tailor-quick-signup-form');
-    const welcomeMsg = document.getElementById('dashboard-welcome-msg');
+    const contentArea = document.getElementById('dashboard-content-area');
+
+    // UI View Templates
+    const views = {
+        overview: (name) => `
+            <div class="bg-white border-b border-gray-200 px-8 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
+                <div>
+                    <h3 class="font-headline-md text-2xl font-bold text-gray-900">Welcome, ${name}!</h3>
+                    <p class="text-sm text-gray-500 mt-1">Here is your business overview for today.</p>
+                </div>
+                <button class="bg-[#CC007E] text-white px-6 py-2.5 rounded font-label-caps text-[11px] tracking-widest font-bold">NEW ORDER</button>
+            </div>
+            <div class="p-8 space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Overdue - Not Ready</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center border-b border-gray-50 pb-3">
+                                <div><p class="font-bold text-sm">Rahul Sharma</p><p class="text-[10px] text-gray-400">#INV-202</p></div>
+                                <span class="text-[#CC007E] font-bold text-sm">₹ 2,400</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div><p class="font-bold text-sm">Priya Patel</p><p class="text-[10px] text-gray-400">#INV-205</p></div>
+                                <span class="text-[#CC007E] font-bold text-sm">₹ 1,850</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Due Today</h4>
+                        <div class="text-center py-4">
+                            <p class="text-4xl font-bold text-gray-900">5</p>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-2">Orders to Deliver</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Due This Week</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-xs"><span>Mon, 12 May</span><span class="font-bold">3 Orders</span></div>
+                            <div class="flex justify-between text-xs"><span>Tue, 13 May</span><span class="font-bold">2 Orders</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `,
+        invoices: () => `
+            <div class="bg-white border-b border-gray-200 px-8 py-6 flex justify-between items-center shrink-0">
+                <h3 class="font-headline-md text-2xl font-bold text-gray-900 uppercase tracking-widest">Invoice Panel</h3>
+                <div class="flex gap-4">
+                    <button class="text-gray-500 font-bold text-[10px] uppercase tracking-widest">Finance</button>
+                    <button class="bg-[#CC007E] text-white px-6 py-2.5 rounded font-label-caps text-[11px] tracking-widest font-bold">NEW INVOICE</button>
+                </div>
+            </div>
+            <div class="p-8 flex flex-col items-center justify-center min-h-[400px]">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-4xl w-full">
+                    <div class="flex flex-col items-center gap-4 group cursor-pointer">
+                        <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
+                            <span class="material-symbols-outlined text-3xl group-hover:text-white">man</span>
+                        </div>
+                        <span class="font-bold tracking-widest text-[11px] uppercase">Mens Wear</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 group cursor-pointer">
+                        <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
+                            <span class="material-symbols-outlined text-3xl group-hover:text-white">woman</span>
+                        </div>
+                        <span class="font-bold tracking-widest text-[11px] uppercase">Ladies Wear</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 group cursor-pointer">
+                        <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
+                            <span class="material-symbols-outlined text-3xl group-hover:text-white">child_care</span>
+                        </div>
+                        <span class="font-bold tracking-widest text-[11px] uppercase">Kids Wear</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 group cursor-pointer">
+                        <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
+                            <span class="material-symbols-outlined text-3xl group-hover:text-white">content_cut</span>
+                        </div>
+                        <span class="font-bold tracking-widest text-[11px] uppercase">Alterations</span>
+                    </div>
+                </div>
+            </div>
+        `,
+        calendar: () => `
+            <div class="bg-white border-b border-gray-200 px-8 py-6 shrink-0">
+                <h3 class="font-headline-md text-2xl font-bold text-gray-900 uppercase tracking-widest">Calendar</h3>
+            </div>
+            <div class="p-8">
+                <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+                    <div class="grid grid-cols-8 bg-gray-50 border-b border-gray-100 font-bold text-[10px] tracking-widest uppercase text-gray-500">
+                        <div class="p-4 border-r border-gray-100">Mon</div><div class="p-4 border-r border-gray-100">Tue</div>
+                        <div class="p-4 border-r border-gray-100">Wed</div><div class="p-4 border-r border-gray-100">Thu</div>
+                        <div class="p-4 border-r border-gray-100">Fri</div><div class="p-4 border-r border-gray-100">Sat</div>
+                        <div class="p-4 border-r border-gray-100">Sun</div><div class="p-4 text-[#CC007E]">Week Total</div>
+                    </div>
+                    <div class="grid grid-cols-8 h-48 divide-x divide-gray-100">
+                        <div class="p-4 flex flex-col justify-center items-center gap-1">
+                            <span class="text-2xl font-bold">2</span><span class="text-[9px] text-gray-400">Orders</span>
+                        </div>
+                        <div class="p-4 flex flex-col justify-center items-center gap-1 bg-[#CC007E]/5">
+                            <span class="text-2xl font-bold text-[#CC007E]">5</span><span class="text-[9px] text-gray-400">Orders</span>
+                        </div>
+                        <div class="p-4"></div><div class="p-4"></div><div class="p-4"></div><div class="p-4"></div><div class="p-4"></div>
+                        <div class="p-4 bg-gray-50 flex flex-col justify-center items-center">
+                            <p class="font-bold text-lg">12</p><p class="text-[8px] text-gray-400">Total Items</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `,
+        designs: () => `
+            <div class="bg-white border-b border-gray-200 px-8 py-6 flex justify-between items-center shrink-0">
+                <h3 class="font-headline-md text-2xl font-bold text-gray-900 uppercase tracking-widest">Designs</h3>
+                <button class="text-[#CC007E] font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">add</span> Add Pinterest Board
+                </button>
+            </div>
+            <div class="p-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="aspect-square bg-gray-100 rounded-xl overflow-hidden relative group cursor-pointer border border-gray-200">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="text-white font-bold text-xs tracking-widest uppercase">View Board</span>
+                        </div>
+                        <div class="p-4 h-full flex flex-col justify-end">
+                            <p class="font-bold text-xs uppercase tracking-widest">Blouse Minimalist</p>
+                            <p class="text-[9px] text-gray-400">12 Designs</p>
+                        </div>
+                    </div>
+                    <div class="aspect-square bg-white border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center justify-center gap-3 text-gray-300 hover:text-[#CC007E] hover:border-[#CC007E] transition-all cursor-pointer">
+                        <span class="material-symbols-outlined text-3xl">add_circle</span>
+                        <span class="font-bold text-[9px] uppercase tracking-widest">New Category</span>
+                    </div>
+                </div>
+            </div>
+        `,
+        messages: () => `
+            <div class="flex h-full overflow-hidden">
+                <div class="w-80 border-r border-gray-200 bg-white flex flex-col">
+                    <div class="p-6 border-b border-gray-100">
+                        <input type="text" class="w-full bg-gray-50 border border-gray-100 rounded-lg p-3 text-xs" placeholder="Search contacts...">
+                    </div>
+                    <div class="flex-1 overflow-y-auto">
+                        <div class="p-4 border-b border-gray-50 bg-[#CC007E]/5 cursor-pointer">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-xs">Arjun Kapoor</span>
+                                <span class="text-[9px] text-gray-400">10:45 AM</span>
+                            </div>
+                            <p class="text-[10px] text-gray-500 truncate">Is my suit ready for the trial?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 flex flex-col bg-gray-50">
+                    <div class="p-6 bg-white border-b border-gray-200 flex justify-between items-center shrink-0">
+                        <span class="font-bold uppercase tracking-widest text-xs">Arjun Kapoor</span>
+                        <button class="text-gray-400"><span class="material-symbols-outlined">more_vert</span></button>
+                    </div>
+                    <div class="flex-1 p-8 space-y-4 overflow-y-auto">
+                        <div class="max-w-[70%] bg-white p-4 rounded-xl shadow-sm text-sm">Hello Masterji, is my wedding suit ready?</div>
+                        <div class="max-w-[70%] ml-auto bg-[#CC007E] text-white p-4 rounded-xl shadow-sm text-sm">Yes Arjun, it's ready for trial. Please visit tomorrow.</div>
+                    </div>
+                    <div class="p-6 bg-white border-t border-gray-200">
+                        <div class="flex gap-4">
+                            <input type="text" class="flex-1 bg-gray-50 border-0 rounded-lg p-4 text-xs" placeholder="Type a message...">
+                            <button class="bg-[#CC007E] text-white w-12 h-12 rounded-lg flex items-center justify-center shadow-lg"><span class="material-symbols-outlined">send</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `,
+        settings: () => `
+            <div class="bg-white border-b border-gray-200 px-8 py-6 shrink-0">
+                <h3 class="font-headline-md text-2xl font-bold text-gray-900 uppercase tracking-widest">Settings</h3>
+            </div>
+            <div class="p-8">
+                <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden max-w-4xl mx-auto">
+                    <div class="flex border-b border-gray-100">
+                        <button class="px-6 py-4 border-b-2 border-[#CC007E] text-[#CC007E] font-bold text-[10px] uppercase tracking-widest">Invoice</button>
+                        <button class="px-6 py-4 text-gray-400 font-bold text-[10px] uppercase tracking-widest">Measurements</button>
+                        <button class="px-6 py-4 text-gray-400 font-bold text-[10px] uppercase tracking-widest">Schedule</button>
+                        <button class="px-6 py-4 text-gray-400 font-bold text-[10px] uppercase tracking-widest">Billing</button>
+                    </div>
+                    <div class="p-8 space-y-6">
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Invoice Prefix</label>
+                                <input type="text" class="w-full bg-gray-50 border border-gray-100 p-3 rounded" value="DM-">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Tax Rate (%)</label>
+                                <input type="number" class="w-full bg-gray-50 border border-gray-100 p-3 rounded" value="18">
+                            </div>
+                        </div>
+                        <button class="bg-[#CC007E] text-white px-8 py-3 rounded font-label-caps text-[11px] tracking-widest font-bold">SAVE SETTINGS</button>
+                    </div>
+                </div>
+            </div>
+        `
+    };
+
+    function switchView(viewName) {
+        const signupData = localStorage.getItem('dm_quick_tailor_signup');
+        const userData = signupData ? JSON.parse(signupData) : { name: 'Tailor' };
+        
+        // Show loader
+        contentArea.innerHTML = '<div class="flex-1 flex items-center justify-center"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#CC007E]"></div></div>';
+        
+        // Update sidebar UI
+        document.querySelectorAll('.view-trigger').forEach(btn => {
+            if (btn.dataset.view === viewName) {
+                btn.classList.add('text-[#CC007E]', 'bg-white/5');
+                btn.classList.remove('text-gray-400');
+            } else {
+                btn.classList.remove('text-[#CC007E]', 'bg-white/5');
+                btn.classList.add('text-gray-400');
+            }
+        });
+
+        // Load view
+        setTimeout(() => {
+            contentArea.innerHTML = views[viewName](userData.name);
+            gaEvent('dashboard_view_change', { view: viewName });
+        }, 300);
+    }
 
     if (btnForTailor && dmDashboardModal) {
         btnForTailor.addEventListener('click', () => {
             dmDashboardModal.classList.remove('opacity-0', 'pointer-events-none');
             dmDashboardModalContent.classList.remove('scale-95');
             dmDashboardModalContent.classList.add('scale-100');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
             
-            // Show signup by default if not signed up
             const signupData = localStorage.getItem('dm_quick_tailor_signup');
             if (!signupData) {
                 tailorSignupView.classList.remove('hidden');
                 tailorDashboardView.classList.add('hidden');
             } else {
-                const data = JSON.parse(signupData);
-                if (welcomeMsg) welcomeMsg.textContent = `Welcome, ${data.name}!`;
                 tailorSignupView.classList.add('hidden');
                 tailorDashboardView.classList.remove('hidden');
+                switchView('overview');
             }
+        });
+
+        // Sidebar triggers
+        document.querySelectorAll('.view-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => switchView(trigger.dataset.view));
         });
 
         closeDmDashboard.addEventListener('click', () => {
@@ -1084,9 +1199,9 @@
                 
                 if (name && mobile) {
                     localStorage.setItem('dm_quick_tailor_signup', JSON.stringify({ name, mobile }));
-                    if (welcomeMsg) welcomeMsg.textContent = `Welcome, ${name}!`;
                     tailorSignupView.classList.add('hidden');
                     tailorDashboardView.classList.remove('hidden');
+                    switchView('overview');
                     showToast('Signup Successful!', 'Welcome to your Dashboard');
                 }
             });
