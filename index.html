@@ -205,40 +205,44 @@
       to   { transform: scaleX(0); }
     }
 
-    /* ── Admin Trigger Button ────────────────────────────────────────── */
-    #admin-trigger {
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      z-index: 60;
-      color: rgba(226, 55, 68, 0.4);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
-    #admin-trigger:hover {
-      color: #CC007E;
-      background: rgba(226, 55, 68, 0.1);
-      box-shadow: 0 0 15px rgba(226,55,68,0.2);
-    }
-    #admin-trigger .material-symbols-outlined {
-      font-size: 24px;
-      font-variation-settings: 'wght' 300;
-    }
+
   </style>
 </head>
 <body class="font-body-md bg-white selection:bg-red-100 selection:text-black">
-<!-- ── Admin Trigger ────────────────────────────────────────────────── -->
-<button id="admin-trigger" title="Admin Access">
-    <span class="material-symbols-outlined">more_vert</span>
-</button>
+<!-- ── App Menu Trigger ────────────────────────────────────────────────── -->
+<div class="fixed top-6 left-6 z-[60]">
+  <button id="app-menu-trigger" title="App Menu" class="text-[#CC007E]/40 hover:text-[#CC007E] hover:bg-[#CC007E]/10 flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300">
+      <span class="material-symbols-outlined font-[300] text-2xl">more_vert</span>
+  </button>
+  
+  <!-- Dropdown Menu -->
+  <div id="app-menu-dropdown" class="absolute top-12 left-0 w-48 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-xl border border-gray-100 opacity-0 pointer-events-none transform -translate-y-2 transition-all duration-300 overflow-hidden flex flex-col">
+    <a href="/DARZI-MARZI-APP/index.html" class="px-4 py-3 text-sm text-gray-700 hover:bg-[#CC007E]/5 hover:text-[#CC007E] font-medium border-b border-gray-50 transition-colors flex items-center">
+      <span class="material-symbols-outlined mr-3 text-[20px]">person</span>For Customer
+    </a>
+    <button id="btn-for-tailor" class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-[#CC007E]/5 hover:text-[#CC007E] font-medium border-b border-gray-50 transition-colors flex items-center">
+      <span class="material-symbols-outlined mr-3 text-[20px]">cut</span>For Tailor
+    </button>
+    <button id="btn-admin-access" class="w-full text-left px-4 py-3 text-sm text-gray-500 hover:bg-[#CC007E]/5 hover:text-[#CC007E] transition-colors flex items-center">
+      <span class="material-symbols-outlined mr-3 text-[20px]">admin_panel_settings</span>Admin Access
+    </button>
+  </div>
+</div>
+
+<!-- StitchPro Modal -->
+<div id="stitchpro-modal" class="fixed inset-0 z-[100] bg-black/80 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-2 md:p-6 backdrop-blur-sm">
+  <div class="bg-white w-full h-full max-w-[1400px] rounded-2xl overflow-hidden flex flex-col shadow-2xl transform scale-95 transition-transform duration-300" id="stitchpro-modal-content">
+    <div class="bg-[#121411] text-white px-6 py-4 flex justify-between items-center shrink-0 border-b border-[#CC007E]/20">
+      <div class="font-display-xl text-xl font-bold tracking-widest"><span class="text-[#FFBD59]">DARZI</span> <span class="text-[#CC007E]">MARZI</span> <span class="text-sm font-normal font-body-md opacity-70 ml-3 tracking-normal hidden sm:inline-block border-l border-white/20 pl-3">Tailor Dashboard</span></div>
+      <button id="close-stitchpro" class="text-white hover:text-[#CC007E] transition-colors bg-white/5 hover:bg-white/10 rounded-full w-8 h-8 flex items-center justify-center">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+    </div>
+    <div class="w-full flex-1 bg-gray-50 relative">
+      <iframe src="https://app.stitchpro.in/en/dashboard/" class="absolute inset-0 w-full h-full border-0"></iframe>
+    </div>
+  </div>
+</div>
 <!-- ── Toast Notification ─────────────────────────────────────────────── -->
 <div id="dm-toast" role="alert" aria-live="polite">
   <div class="toast-icon">
@@ -831,9 +835,60 @@
     }
 
     // ────────────────────────────────────────────────────────────────────────────
+    //  APP MENU & MODALS
+    // ────────────────────────────────────────────────────────────────────────────
+    const appMenuTrigger = document.getElementById('app-menu-trigger');
+    const appMenuDropdown = document.getElementById('app-menu-dropdown');
+    
+    // Toggle dropdown
+    if (appMenuTrigger && appMenuDropdown) {
+        appMenuTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isClosed = appMenuDropdown.classList.contains('opacity-0');
+            if (isClosed) {
+                appMenuDropdown.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-2');
+                appMenuDropdown.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            } else {
+                appMenuDropdown.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2');
+                appMenuDropdown.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!appMenuDropdown.contains(e.target) && !appMenuTrigger.contains(e.target)) {
+                appMenuDropdown.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2');
+                appMenuDropdown.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            }
+        });
+    }
+
+    // Stitchpro Modal
+    const btnForTailor = document.getElementById('btn-for-tailor');
+    const stitchproModal = document.getElementById('stitchpro-modal');
+    const stitchproModalContent = document.getElementById('stitchpro-modal-content');
+    const closeStitchpro = document.getElementById('close-stitchpro');
+
+    if (btnForTailor && stitchproModal) {
+        btnForTailor.addEventListener('click', () => {
+            stitchproModal.classList.remove('opacity-0', 'pointer-events-none');
+            stitchproModalContent.classList.remove('scale-95');
+            stitchproModalContent.classList.add('scale-100');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
+
+        closeStitchpro.addEventListener('click', () => {
+            stitchproModal.classList.add('opacity-0', 'pointer-events-none');
+            stitchproModalContent.classList.add('scale-95');
+            stitchproModalContent.classList.remove('scale-100');
+            document.body.style.overflow = '';
+        });
+    }
+
+    // ────────────────────────────────────────────────────────────────────────────
     //  ADMIN ACCESS & CSV DOWNLOAD
     // ────────────────────────────────────────────────────────────────────────────
-    const adminBtn = document.getElementById('admin-trigger');
+    const adminBtn = document.getElementById('btn-admin-access');
     if (adminBtn) {
         adminBtn.addEventListener('click', () => {
             const code = prompt('ADMIN ACCESS REQUIRED\nEnter secure code to download records:');
