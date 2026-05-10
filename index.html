@@ -232,12 +232,12 @@
   </div>
 </div>
 
-<!-- StitchPro Modal -->
-<div id="stitchpro-modal" class="fixed inset-0 z-[100] bg-black/80 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-2 md:p-6 backdrop-blur-sm">
-  <div class="bg-white w-full h-full max-w-[1400px] rounded-2xl overflow-hidden flex flex-col shadow-2xl transform scale-95 transition-transform duration-300" id="stitchpro-modal-content">
+<!-- Darzi Marzi Modal -->
+<div id="darzimarzi-dashboard-modal" class="fixed inset-0 z-[100] bg-black/80 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-2 md:p-6 backdrop-blur-sm">
+  <div class="bg-white w-full h-full max-w-[1400px] rounded-2xl overflow-hidden flex flex-col shadow-2xl transform scale-95 transition-transform duration-300" id="dm-dashboard-modal-content">
     <div class="bg-[#121411] text-white px-6 py-4 flex justify-between items-center shrink-0 border-b border-[#CC007E]/20">
       <div class="font-display-xl text-xl font-bold tracking-widest"><span class="text-[#FFBD59]">DARZI</span> <span class="text-[#CC007E]">MARZI</span> <span class="text-sm font-normal font-body-md opacity-70 ml-3 tracking-normal hidden sm:inline-block border-l border-white/20 pl-3">Tailor Dashboard</span></div>
-      <button id="close-stitchpro" class="text-white hover:text-[#CC007E] transition-colors bg-white/5 hover:bg-white/10 rounded-full w-8 h-8 flex items-center justify-center">
+      <button id="close-dm-dashboard" class="text-white hover:text-[#CC007E] transition-colors bg-white/5 hover:bg-white/10 rounded-full w-8 h-8 flex items-center justify-center">
         <span class="material-symbols-outlined text-xl">close</span>
       </button>
     </div>
@@ -887,20 +887,20 @@
         });
     }
 
-    // Stitchpro Modal
+    // Darzi Marzi Modal
     const btnForTailor = document.getElementById('btn-for-tailor');
-    const stitchproModal = document.getElementById('stitchpro-modal');
-    const stitchproModalContent = document.getElementById('stitchpro-modal-content');
-    const closeStitchpro = document.getElementById('close-stitchpro');
+    const dmDashboardModal = document.getElementById('darzimarzi-dashboard-modal');
+    const dmDashboardModalContent = document.getElementById('dm-dashboard-modal-content');
+    const closeDmDashboard = document.getElementById('close-dm-dashboard');
     const tailorSignupView = document.getElementById('tailor-signup-view');
     const tailorIframeView = document.getElementById('tailor-iframe-view');
     const tailorQuickSignupForm = document.getElementById('tailor-quick-signup-form');
 
-    if (btnForTailor && stitchproModal) {
+    if (btnForTailor && dmDashboardModal) {
         btnForTailor.addEventListener('click', () => {
-            stitchproModal.classList.remove('opacity-0', 'pointer-events-none');
-            stitchproModalContent.classList.remove('scale-95');
-            stitchproModalContent.classList.add('scale-100');
+            dmDashboardModal.classList.remove('opacity-0', 'pointer-events-none');
+            dmDashboardModalContent.classList.remove('scale-95');
+            dmDashboardModalContent.classList.add('scale-100');
             document.body.style.overflow = 'hidden'; // Prevent background scrolling
             
             // Show signup by default if not signed up
@@ -913,10 +913,10 @@
             }
         });
 
-        closeStitchpro.addEventListener('click', () => {
-            stitchproModal.classList.add('opacity-0', 'pointer-events-none');
-            stitchproModalContent.classList.add('scale-95');
-            stitchproModalContent.classList.remove('scale-100');
+        closeDmDashboard.addEventListener('click', () => {
+            dmDashboardModal.classList.add('opacity-0', 'pointer-events-none');
+            dmDashboardModalContent.classList.add('scale-95');
+            dmDashboardModalContent.classList.remove('scale-100');
             document.body.style.overflow = '';
         });
         
