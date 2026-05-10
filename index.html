@@ -218,13 +218,16 @@
   <!-- Dropdown Menu -->
   <div id="app-menu-dropdown" class="absolute top-12 left-0 w-48 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-xl border border-gray-100 opacity-0 pointer-events-none transform -translate-y-2 transition-all duration-300 overflow-hidden flex flex-col">
     <a href="/DARZI-MARZI-APP/index.html" class="px-4 py-3 text-sm text-gray-700 hover:bg-[#CC007E]/5 hover:text-[#CC007E] font-medium border-b border-gray-50 transition-colors flex items-center">
-      <span class="material-symbols-outlined mr-3 text-[20px]">person</span>For Customer
+      <span class="material-symbols-outlined mr-3 text-[20px]">person</span>MY PROFILE
     </a>
     <button id="btn-for-tailor" class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-[#CC007E]/5 hover:text-[#CC007E] font-medium border-b border-gray-50 transition-colors flex items-center">
-      <span class="material-symbols-outlined mr-3 text-[20px]">cut</span>For Tailor
+      <span class="material-symbols-outlined mr-3 text-[20px]">cut</span>TAILOR
     </button>
+    <a href="#" class="px-4 py-3 text-sm text-gray-700 hover:bg-[#CC007E]/5 hover:text-[#CC007E] font-medium border-b border-gray-50 transition-colors flex items-center">
+      <span class="material-symbols-outlined mr-3 text-[20px]">settings</span>SETTINGS
+    </a>
     <button id="btn-admin-access" class="w-full text-left px-4 py-3 text-sm text-gray-500 hover:bg-[#CC007E]/5 hover:text-[#CC007E] transition-colors flex items-center">
-      <span class="material-symbols-outlined mr-3 text-[20px]">admin_panel_settings</span>Admin Access
+      <span class="material-symbols-outlined mr-3 text-[20px]">admin_panel_settings</span>ADMIN
     </button>
   </div>
 </div>
@@ -238,7 +241,28 @@
         <span class="material-symbols-outlined text-xl">close</span>
       </button>
     </div>
-    <div class="w-full flex-1 bg-gray-50 relative">
+    
+    <!-- Tailor Signup Form inside modal -->
+    <div id="tailor-signup-view" class="w-full flex-1 bg-white flex items-center justify-center p-6">
+      <div class="max-w-md w-full bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-sm">
+        <h2 class="font-headline-md text-3xl font-bold text-center mb-2 text-[#1c1c1c]">Tailor Signup</h2>
+        <p class="text-center text-gray-500 text-sm mb-8">Register to access your dashboard</p>
+        <form id="tailor-quick-signup-form" class="space-y-5">
+          <div>
+            <label class="block text-xs font-bold text-[#CC007E] mb-2 tracking-widest uppercase">Business Name</label>
+            <input type="text" id="t-signup-name" required class="w-full p-4 border border-gray-200 rounded focus:outline-none focus:border-[#CC007E] focus:shadow-[0_0_15px_rgba(226,55,68,0.2)] transition-all duration-300 bg-white" placeholder="Enter Business Name">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#CC007E] mb-2 tracking-widest uppercase">Mobile No.</label>
+            <input type="tel" id="t-signup-mobile" required class="w-full p-4 border border-gray-200 rounded focus:outline-none focus:border-[#CC007E] focus:shadow-[0_0_15px_rgba(226,55,68,0.2)] transition-all duration-300 bg-white" placeholder="Enter Mobile Number">
+          </div>
+          <button type="submit" class="w-full mt-6 bg-[#CC007E] text-white py-4 rounded font-label-caps text-[12px] tracking-[0.2em] font-bold hover:shadow-[0_0_25px_rgba(226,55,68,0.5)] transition-all duration-300">CONTINUE TO DASHBOARD</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- The iframe view (hidden initially) -->
+    <div id="tailor-iframe-view" class="w-full flex-1 bg-gray-50 relative hidden">
       <iframe src="https://app.stitchpro.in/en/dashboard/" class="absolute inset-0 w-full h-full border-0"></iframe>
     </div>
   </div>
@@ -571,12 +595,12 @@
                 <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
             </svg>
         </a>
-        <a href="#" class="flex items-center justify-center w-12 h-12 rounded-full border border-[#CC007E]/30 text-[#CC007E] bg-white/20 hover:bg-[#CC007E] hover:text-black hover:border-[#CC007E] hover:-translate-y-2 hover:rotate-[360deg] hover:shadow-[0_0_25px_rgba(226,55,68,0.6)] transition-all duration-700 group" aria-label="WhatsApp">
+        <a href="https://wa.me/919319686051" target="_blank" class="flex items-center justify-center w-12 h-12 rounded-full border border-[#CC007E]/30 text-[#CC007E] bg-white/20 hover:bg-[#CC007E] hover:text-black hover:border-[#CC007E] hover:-translate-y-2 hover:rotate-[360deg] hover:shadow-[0_0_25px_rgba(226,55,68,0.6)] transition-all duration-700 group" aria-label="WhatsApp">
             <svg class="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.337a9.993 9.993 0 004.779 1.216h.004c5.505 0 9.988-4.478 9.989-9.985.001-2.667-1.036-5.176-2.919-7.061A9.916 9.916 0 0012.012 2zm.004 16.638c-1.543 0-3.056-.414-4.379-1.197l-.314-.187-3.256.832.868-3.111-.205-.326a8.288 8.288 0 01-1.267-4.462c.001-4.57 3.725-8.291 8.301-8.291 2.215.001 4.296.863 5.862 2.43 1.565 1.566 2.427 3.651 2.426 5.866-.001 4.569-3.724 8.29-8.29 8.29h-.002zm4.551-6.196c-.25-.125-1.479-.73-1.708-.813-.229-.083-.396-.125-.562.125-.167.25-.646.813-.792.979-.146.167-.292.188-.542.063-.25-.125-1.055-.389-2.011-1.242-.744-.664-1.245-1.485-1.391-1.735-.146-.25-.016-.385.109-.51.112-.113.25-.292.375-.438.125-.146.167-.25.25-.417.083-.167.042-.313-.021-.438-.063-.125-.562-1.354-.771-1.854-.203-.488-.411-.422-.562-.43-.146-.007-.313-.007-.479-.007s-.438.063-.667.313c-.229.25-.875.854-.875 2.083s.896 2.417 1.021 2.583c.125.167 1.761 2.688 4.264 3.769.596.257 1.061.411 1.425.526.598.19 1.142.163 1.569.099.475-.072 1.479-.604 1.688-1.188.208-.583.208-1.083.146-1.188-.062-.104-.229-.167-.479-.292z"/>
             </svg>
         </a>
-        <a href="#" class="flex items-center justify-center w-12 h-12 rounded-full border border-[#CC007E]/30 text-[#CC007E] bg-white/20 hover:bg-[#CC007E] hover:text-black hover:border-[#CC007E] hover:-translate-y-2 hover:rotate-[360deg] hover:shadow-[0_0_25px_rgba(226,55,68,0.6)] transition-all duration-700 group" aria-label="Facebook">
+        <a href="https://www.facebook.com/share/197t19GePV/" target="_blank" class="flex items-center justify-center w-12 h-12 rounded-full border border-[#CC007E]/30 text-[#CC007E] bg-white/20 hover:bg-[#CC007E] hover:text-black hover:border-[#CC007E] hover:-translate-y-2 hover:rotate-[360deg] hover:shadow-[0_0_25px_rgba(226,55,68,0.6)] transition-all duration-700 group" aria-label="Facebook">
             <svg class="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
             </svg>
@@ -868,6 +892,9 @@
     const stitchproModal = document.getElementById('stitchpro-modal');
     const stitchproModalContent = document.getElementById('stitchpro-modal-content');
     const closeStitchpro = document.getElementById('close-stitchpro');
+    const tailorSignupView = document.getElementById('tailor-signup-view');
+    const tailorIframeView = document.getElementById('tailor-iframe-view');
+    const tailorQuickSignupForm = document.getElementById('tailor-quick-signup-form');
 
     if (btnForTailor && stitchproModal) {
         btnForTailor.addEventListener('click', () => {
@@ -875,6 +902,15 @@
             stitchproModalContent.classList.remove('scale-95');
             stitchproModalContent.classList.add('scale-100');
             document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            
+            // Show signup by default if not signed up
+            if (!localStorage.getItem('dm_quick_tailor_signup')) {
+                tailorSignupView.classList.remove('hidden');
+                tailorIframeView.classList.add('hidden');
+            } else {
+                tailorSignupView.classList.add('hidden');
+                tailorIframeView.classList.remove('hidden');
+            }
         });
 
         closeStitchpro.addEventListener('click', () => {
@@ -883,6 +919,21 @@
             stitchproModalContent.classList.remove('scale-100');
             document.body.style.overflow = '';
         });
+        
+        if (tailorQuickSignupForm) {
+            tailorQuickSignupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('t-signup-name').value;
+                const mobile = document.getElementById('t-signup-mobile').value;
+                
+                if (name && mobile) {
+                    localStorage.setItem('dm_quick_tailor_signup', JSON.stringify({ name, mobile }));
+                    tailorSignupView.classList.add('hidden');
+                    tailorIframeView.classList.remove('hidden');
+                    showToast('Signup Successful!', 'Welcome to the Tailor Dashboard');
+                }
+            });
+        }
     }
 
     // ────────────────────────────────────────────────────────────────────────────
