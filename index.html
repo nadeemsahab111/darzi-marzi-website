@@ -261,9 +261,161 @@
       </div>
     </div>
 
-    <!-- The iframe view (hidden initially) -->
-    <div id="tailor-iframe-view" class="w-full flex-1 bg-gray-50 relative hidden">
-      <iframe src="https://app.stitchpro.in/en/dashboard/" class="absolute inset-0 w-full h-full border-0"></iframe>
+    <!-- The Dashboard View (shown after signup) -->
+    <div id="tailor-dashboard-view" class="w-full flex-1 bg-gray-50 relative hidden overflow-y-auto">
+      <div class="flex h-full">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#121411] text-white hidden lg:flex flex-col p-6 shrink-0">
+          <nav class="space-y-6 flex-1">
+            <div class="flex items-center gap-3 text-[#CC007E] px-2">
+              <span class="material-symbols-outlined">dashboard</span>
+              <span class="font-bold tracking-widest text-sm uppercase">Overview</span>
+            </div>
+            <div class="flex items-center gap-3 text-gray-400 hover:text-white px-2 transition-colors cursor-pointer">
+              <span class="material-symbols-outlined">shopping_cart</span>
+              <span class="font-bold tracking-widest text-sm uppercase">Orders</span>
+            </div>
+            <div class="flex items-center gap-3 text-gray-400 hover:text-white px-2 transition-colors cursor-pointer">
+              <span class="material-symbols-outlined">groups</span>
+              <span class="font-bold tracking-widest text-sm uppercase">Customers</span>
+            </div>
+            <div class="flex items-center gap-3 text-gray-400 hover:text-white px-2 transition-colors cursor-pointer">
+              <span class="material-symbols-outlined">straighten</span>
+              <span class="font-bold tracking-widest text-sm uppercase">Measurements</span>
+            </div>
+            <div class="flex items-center gap-3 text-gray-400 hover:text-white px-2 transition-colors cursor-pointer">
+              <span class="material-symbols-outlined">analytics</span>
+              <span class="font-bold tracking-widest text-sm uppercase">Analytics</span>
+            </div>
+          </nav>
+          <div class="border-t border-white/10 pt-6 mt-6">
+            <div class="flex items-center gap-3 text-gray-400 hover:text-[#CC007E] px-2 transition-colors cursor-pointer">
+              <span class="material-symbols-outlined">settings</span>
+              <span class="font-bold tracking-widest text-sm uppercase">Settings</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col min-w-0">
+          <!-- Dashboard Header -->
+          <div class="bg-white border-b border-gray-200 px-8 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
+            <div>
+              <h3 class="font-headline-md text-2xl font-bold text-gray-900" id="dashboard-welcome-msg">Welcome Back!</h3>
+              <p class="text-sm text-gray-500 mt-1">Here is what's happening with your business today.</p>
+            </div>
+            <div class="flex gap-3 w-full sm:w-auto">
+              <button class="bg-[#CC007E] text-white px-6 py-2.5 rounded font-label-caps text-[11px] tracking-widest font-bold hover:shadow-[0_0_20px_rgba(226,55,68,0.3)] transition-all">NEW ORDER</button>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="p-8 space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <!-- Card 1 -->
+              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
+                <div class="flex justify-between items-start mb-4">
+                  <div class="p-3 bg-[#CC007E]/5 rounded-lg text-[#CC007E]">
+                    <span class="material-symbols-outlined">currency_rupee</span>
+                  </div>
+                  <span class="text-xs font-bold text-green-500">+12.5%</span>
+                </div>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Total Revenue</h4>
+                <p class="text-2xl font-bold text-gray-900">₹ 84,250</p>
+              </div>
+              <!-- Card 2 -->
+              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
+                <div class="flex justify-between items-start mb-4">
+                  <div class="p-3 bg-blue-50 rounded-lg text-blue-600">
+                    <span class="material-symbols-outlined">package_2</span>
+                  </div>
+                  <span class="text-xs font-bold text-blue-500">8 Pending</span>
+                </div>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Active Orders</h4>
+                <p class="text-2xl font-bold text-gray-900">24</p>
+              </div>
+              <!-- Card 3 -->
+              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
+                <div class="flex justify-between items-start mb-4">
+                  <div class="p-3 bg-[#FFBD59]/10 rounded-lg text-[#FFBD59]">
+                    <span class="material-symbols-outlined">person_add</span>
+                  </div>
+                  <span class="text-xs font-bold text-orange-500">+4 Today</span>
+                </div>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">New Leads</h4>
+                <p class="text-2xl font-bold text-gray-900">12</p>
+              </div>
+              <!-- Card 4 -->
+              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
+                <div class="flex justify-between items-start mb-4">
+                  <div class="p-3 bg-purple-50 rounded-lg text-purple-600">
+                    <span class="material-symbols-outlined">star</span>
+                  </div>
+                  <span class="text-xs font-bold text-purple-500">4.9 / 5</span>
+                </div>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Customer Rating</h4>
+                <p class="text-2xl font-bold text-gray-900">156 Reviews</p>
+              </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+              <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                <h4 class="font-bold text-gray-900 uppercase tracking-widest text-xs">Recent Orders</h4>
+                <button class="text-[#CC007E] text-[10px] font-bold tracking-widest uppercase hover:underline">View All</button>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                  <thead class="bg-gray-50 text-gray-400 uppercase text-[10px] tracking-widest font-bold">
+                    <tr>
+                      <th class="px-6 py-4">Order ID</th>
+                      <th class="px-6 py-4">Customer</th>
+                      <th class="px-6 py-4">Status</th>
+                      <th class="px-6 py-4">Amount</th>
+                      <th class="px-6 py-4">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-50">
+                    <tr class="hover:bg-gray-50 transition-colors">
+                      <td class="px-6 py-4 font-mono text-gray-500 text-xs">#DM-1024</td>
+                      <td class="px-6 py-4 font-bold text-gray-900">Ananya Verma</td>
+                      <td class="px-6 py-4">
+                        <span class="bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Measuring</span>
+                      </td>
+                      <td class="px-6 py-4 font-bold">₹ 4,500</td>
+                      <td class="px-6 py-4">
+                        <button class="text-gray-400 hover:text-[#CC007E]"><span class="material-symbols-outlined">visibility</span></button>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 transition-colors">
+                      <td class="px-6 py-4 font-mono text-gray-500 text-xs">#DM-1023</td>
+                      <td class="px-6 py-4 font-bold text-gray-900">Vikram Singh</td>
+                      <td class="px-6 py-4">
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Stitching</span>
+                      </td>
+                      <td class="px-6 py-4 font-bold">₹ 8,200</td>
+                      <td class="px-6 py-4">
+                        <button class="text-gray-400 hover:text-[#CC007E]"><span class="material-symbols-outlined">visibility</span></button>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 transition-colors">
+                      <td class="px-6 py-4 font-mono text-gray-500 text-xs">#DM-1022</td>
+                      <td class="px-6 py-4 font-bold text-gray-900">Priya Sharma</td>
+                      <td class="px-6 py-4">
+                        <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Delivered</span>
+                      </td>
+                      <td class="px-6 py-4 font-bold">₹ 3,800</td>
+                      <td class="px-6 py-4">
+                        <button class="text-gray-400 hover:text-[#CC007E]"><span class="material-symbols-outlined">visibility</span></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -893,8 +1045,9 @@
     const dmDashboardModalContent = document.getElementById('dm-dashboard-modal-content');
     const closeDmDashboard = document.getElementById('close-dm-dashboard');
     const tailorSignupView = document.getElementById('tailor-signup-view');
-    const tailorIframeView = document.getElementById('tailor-iframe-view');
+    const tailorDashboardView = document.getElementById('tailor-dashboard-view');
     const tailorQuickSignupForm = document.getElementById('tailor-quick-signup-form');
+    const welcomeMsg = document.getElementById('dashboard-welcome-msg');
 
     if (btnForTailor && dmDashboardModal) {
         btnForTailor.addEventListener('click', () => {
@@ -904,12 +1057,15 @@
             document.body.style.overflow = 'hidden'; // Prevent background scrolling
             
             // Show signup by default if not signed up
-            if (!localStorage.getItem('dm_quick_tailor_signup')) {
+            const signupData = localStorage.getItem('dm_quick_tailor_signup');
+            if (!signupData) {
                 tailorSignupView.classList.remove('hidden');
-                tailorIframeView.classList.add('hidden');
+                tailorDashboardView.classList.add('hidden');
             } else {
+                const data = JSON.parse(signupData);
+                if (welcomeMsg) welcomeMsg.textContent = `Welcome, ${data.name}!`;
                 tailorSignupView.classList.add('hidden');
-                tailorIframeView.classList.remove('hidden');
+                tailorDashboardView.classList.remove('hidden');
             }
         });
 
@@ -928,9 +1084,10 @@
                 
                 if (name && mobile) {
                     localStorage.setItem('dm_quick_tailor_signup', JSON.stringify({ name, mobile }));
+                    if (welcomeMsg) welcomeMsg.textContent = `Welcome, ${name}!`;
                     tailorSignupView.classList.add('hidden');
-                    tailorIframeView.classList.remove('hidden');
-                    showToast('Signup Successful!', 'Welcome to the Tailor Dashboard');
+                    tailorDashboardView.classList.remove('hidden');
+                    showToast('Signup Successful!', 'Welcome to your Dashboard');
                 }
             });
         }
