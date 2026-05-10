@@ -983,43 +983,124 @@
                 </div>
             </div>
         `,
-        invoices: () => `
-            <div class="bg-white border-b border-gray-200 px-8 py-6 flex justify-between items-center shrink-0">
-                <h3 class="font-headline-md text-2xl font-bold text-gray-900 uppercase tracking-widest">Invoice Panel</h3>
-                <div class="flex gap-4">
-                    <button class="text-gray-500 font-bold text-[10px] uppercase tracking-widest">Finance</button>
-                    <button class="bg-[#CC007E] text-white px-6 py-2.5 rounded font-label-caps text-[11px] tracking-widest font-bold">NEW INVOICE</button>
-                </div>
-            </div>
-            <div class="p-8 flex flex-col items-center justify-center min-h-[400px]">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-4xl w-full">
-                    <div class="flex flex-col items-center gap-4 group cursor-pointer">
-                        <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
-                            <span class="material-symbols-outlined text-3xl group-hover:text-white">man</span>
-                        </div>
-                        <span class="font-bold tracking-widest text-[11px] uppercase">Mens Wear</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-4 group cursor-pointer">
-                        <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
-                            <span class="material-symbols-outlined text-3xl group-hover:text-white">woman</span>
-                        </div>
-                        <span class="font-bold tracking-widest text-[11px] uppercase">Ladies Wear</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-4 group cursor-pointer">
-                        <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
-                            <span class="material-symbols-outlined text-3xl group-hover:text-white">child_care</span>
-                        </div>
-                        <span class="font-bold tracking-widest text-[11px] uppercase">Kids Wear</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-4 group cursor-pointer">
-                        <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
-                            <span class="material-symbols-outlined text-3xl group-hover:text-white">content_cut</span>
-                        </div>
-                        <span class="font-bold tracking-widest text-[11px] uppercase">Alterations</span>
+        invoices: () => {
+            // Internal state for sub-views in Invoices
+            const subView = localStorage.getItem('dm_invoice_subview') || 'new';
+            
+            const sidebarItems = [
+                { id: 'new', label: 'New Invoice', icon: 'add_circle' },
+                { id: 'history', label: 'History', icon: 'history' },
+                { id: 'finance', label: 'Finance', icon: 'account_balance_wallet' },
+                { id: 'pending', label: 'Pending', icon: 'pending_actions' }
+            ];
+
+            const renderSubSidebar = () => `
+                <div class="w-48 border-r border-gray-100 flex flex-col p-4 bg-gray-50/50 shrink-0">
+                    <div class="space-y-2">
+                        ${sidebarItems.map(item => `
+                            <button onclick="window.switchInvoiceSubview('${item.id}')" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${subView === item.id ? 'bg-[#CC007E] text-white shadow-md' : 'text-gray-500 hover:bg-gray-100'}">
+                                <span class="material-symbols-outlined text-sm">${item.icon}</span>
+                                ${item.label}
+                            </button>
+                        `).join('')}
                     </div>
                 </div>
-            </div>
-        `,
+            `;
+
+            const contents = {
+                new: `
+                    <div class="p-12 flex flex-col items-center justify-center flex-1">
+                        <div class="text-center mb-12">
+                            <h4 class="text-xl font-bold text-gray-900 mb-2">Create New Invoice</h4>
+                            <p class="text-xs text-gray-400 uppercase tracking-widest">Select Category to Begin</p>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-4xl w-full">
+                            <div class="flex flex-col items-center gap-4 group cursor-pointer" onclick="showToast('Category Selected', 'Mens Wear Invoice Started')">
+                                <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
+                                    <span class="material-symbols-outlined text-3xl group-hover:text-white">man</span>
+                                </div>
+                                <span class="font-bold tracking-widest text-[11px] uppercase">Mens Wear</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-4 group cursor-pointer" onclick="showToast('Category Selected', 'Ladies Wear Invoice Started')">
+                                <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
+                                    <span class="material-symbols-outlined text-3xl group-hover:text-white">woman</span>
+                                </div>
+                                <span class="font-bold tracking-widest text-[11px] uppercase">Ladies Wear</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-4 group cursor-pointer" onclick="showToast('Category Selected', 'Kids Wear Invoice Started')">
+                                <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
+                                    <span class="material-symbols-outlined text-3xl group-hover:text-white">child_care</span>
+                                </div>
+                                <span class="font-bold tracking-widest text-[11px] uppercase">Kids Wear</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-4 group cursor-pointer" onclick="showToast('Category Selected', 'Alterations Started')">
+                                <div class="w-24 h-24 rounded-full border-4 border-[#CC007E]/20 flex items-center justify-center group-hover:bg-[#CC007E] group-hover:border-[#CC007E] transition-all">
+                                    <span class="material-symbols-outlined text-3xl group-hover:text-white">content_cut</span>
+                                </div>
+                                <span class="font-bold tracking-widest text-[11px] uppercase">Alterations</span>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                history: `
+                    <div class="p-8 flex-1 overflow-y-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="font-bold text-xs uppercase tracking-widest">Recent Invoices</h4>
+                            <input type="text" placeholder="Search Invoices..." class="text-[10px] p-2 border rounded bg-gray-50 w-48">
+                        </div>
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-gray-50 text-gray-400 font-bold uppercase tracking-widest">
+                                <tr><th class="p-4">Inv #</th><th class="p-4">Customer</th><th class="p-4">Date</th><th class="p-4">Status</th><th class="p-4 text-right">Amount</th></tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-50">
+                                <tr><td class="p-4 font-mono">#INV-8821</td><td class="p-4 font-bold">Karan Johar</td><td class="p-4">10 May 2026</td><td class="p-4"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-[9px] font-bold">PAID</span></td><td class="p-4 text-right font-bold">₹ 12,400</td></tr>
+                                <tr><td class="p-4 font-mono">#INV-8820</td><td class="p-4 font-bold">Sara Ali</td><td class="p-4">09 May 2026</td><td class="p-4"><span class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded text-[9px] font-bold">PENDING</span></td><td class="p-4 text-right font-bold">₹ 5,200</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `,
+                finance: `
+                    <div class="p-8 flex-1">
+                        <div class="grid grid-cols-3 gap-6 mb-8">
+                            <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                                <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">Weekly Earnings</p>
+                                <p class="text-xl font-bold text-gray-900">₹ 42,000</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                                <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">Pending Collections</p>
+                                <p class="text-xl font-bold text-[#CC007E]">₹ 18,500</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                                <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">Monthly Forecast</p>
+                                <p class="text-xl font-bold text-green-600">₹ 1,85,000</p>
+                            </div>
+                        </div>
+                        <div class="h-48 bg-gray-50 rounded-xl flex items-center justify-center border border-dashed border-gray-200">
+                            <p class="text-xs text-gray-400 uppercase tracking-widest">Financial Charts Loading...</p>
+                        </div>
+                    </div>
+                `,
+                pending: `
+                    <div class="p-12 flex items-center justify-center flex-1">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined text-5xl text-gray-200 mb-4">check_circle</span>
+                            <p class="text-sm font-bold text-gray-900">All caught up!</p>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">No pending actions required.</p>
+                        </div>
+                    </div>
+                `
+            };
+
+            return `
+                <div class="bg-white border-b border-gray-200 px-8 py-6 flex justify-between items-center shrink-0">
+                    <h3 class="font-headline-md text-2xl font-bold text-gray-900 uppercase tracking-widest">Invoice Panel</h3>
+                </div>
+                <div class="flex flex-1 overflow-hidden">
+                    ${renderSubSidebar()}
+                    ${contents[subView] || contents.new}
+                </div>
+            `;
+        },
         calendar: () => `
             <div class="bg-white border-b border-gray-200 px-8 py-6 shrink-0">
                 <h3 class="font-headline-md text-2xl font-bold text-gray-900 uppercase tracking-widest">Calendar</h3>
@@ -1143,6 +1224,9 @@
         // Show loader
         contentArea.innerHTML = '<div class="flex-1 flex items-center justify-center"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#CC007E]"></div></div>';
         
+        // Reset subview when switching main modules
+        localStorage.removeItem('dm_invoice_subview');
+
         // Update sidebar UI
         document.querySelectorAll('.view-trigger').forEach(btn => {
             if (btn.dataset.view === viewName) {
@@ -1160,6 +1244,13 @@
             gaEvent('dashboard_view_change', { view: viewName });
         }, 300);
     }
+
+    // Subview handler for Invoices
+    window.switchInvoiceSubview = function(subName) {
+        localStorage.setItem('dm_invoice_subview', subName);
+        contentArea.innerHTML = views.invoices();
+        showToast('Module Switched', `Viewing ${subName}`);
+    };
 
     if (btnForTailor && dmDashboardModal) {
         btnForTailor.addEventListener('click', () => {
